@@ -20,12 +20,16 @@ import {
 } from './styled';
 import { Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import type { DrawerNavigationProp } from '@react-navigation/drawer';
+import type { RootDrawerParamList } from '../../navigation';
+
+type NavigationProp = DrawerNavigationProp<RootDrawerParamList>;
 
 export function SearchScreen() {
   const [searchTerm, setSearchTerm] = useState('');
   const debouncedSearch = useDebounce(searchTerm, 500);
   const { language } = useLanguage();
-  const navigation = useNavigation();
+  const navigation = useNavigation<NavigationProp>();
 
   const { data: cities, isLoading } = useQuery({
     queryKey: ['cities', debouncedSearch],
@@ -34,7 +38,6 @@ export function SearchScreen() {
   });
 
   const handleCitySelect = (city: string) => {
-    // Aqui você pode implementar a lógica para salvar a cidade como favorita
     navigation.navigate('Home', { city });
   };
 
