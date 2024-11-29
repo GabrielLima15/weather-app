@@ -6,12 +6,13 @@ import { Navigation } from './src/navigation';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { LanguageProvider } from './src/contexts/language-context';
 import { FavoritesProvider } from './src/contexts/favorites-context';
+import { NotificationsProvider } from './src/contexts/notifications-context';
 
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       retry: 2,
-      staleTime: 1000 * 60 * 5, // 5 minutos
+      staleTime: 1000 * 60 * 5,
       refetchOnWindowFocus: false,
     },
   },
@@ -23,9 +24,11 @@ export default function App() {
       <QueryClientProvider client={queryClient}>
         <LanguageProvider>
           <FavoritesProvider>
-            <ThemeProvider>
-              <Navigation />
-            </ThemeProvider>
+            <NotificationsProvider>
+              <ThemeProvider>
+                <Navigation />
+              </ThemeProvider>
+            </NotificationsProvider>
           </FavoritesProvider>
         </LanguageProvider>
       </QueryClientProvider>

@@ -8,7 +8,7 @@ import { ForecastList } from '../../components/weather/forecast-list';
 import { useLanguage } from '../../contexts/language-context';
 import { Feather } from '@expo/vector-icons';
 import styled from 'styled-components/native';
-import { LocationPermissionModal } from '../../components/location-permission-modal';
+import { PermissionModal } from '../../components/permission-modal';
 import { FavoriteButton } from '../../components/favorite-button';
 
 export function HomeScreen() {
@@ -66,10 +66,11 @@ export function HomeScreen() {
         {forecast && <ForecastList data={forecast.forecast.forecastday} language={language} />}
       </ScrollView>
 
-      <LocationPermissionModal
+      <PermissionModal
         visible={showPermissionModal}
         onAllow={() => handlePermissionResponse(true)}
         onDeny={() => handlePermissionResponse(false)}
+        type="location"
       />
     </Container>
   );
