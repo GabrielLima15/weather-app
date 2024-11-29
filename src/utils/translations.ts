@@ -39,6 +39,10 @@ export const translations = {
     notificationPermissionTitle: 'Permitir notificações',
     notificationPermissionDescription: 'Precisamos da sua permissão para enviar alertas meteorológicos.',
     testNotifications: 'Testar Notificações',
+    temperatureChart: 'Temperatura nos próximos dias',
+    precipitationChart: 'Precipitação nos próximos dias',
+    temperatureUnit: '°C',
+    precipitationUnit: 'mm',
   },
   en: {
     humidity: 'Humidity',
@@ -80,6 +84,10 @@ export const translations = {
     notificationPermissionTitle: 'Allow notifications',
     notificationPermissionDescription: 'We need your permission to send weather alerts.',
     testNotifications: 'Test Notifications',
+    temperatureChart: 'Temperature in the next days',
+    precipitationChart: 'Precipitation in the next days',
+    temperatureUnit: '°C',
+    precipitationUnit: 'mm',
   },
   es: {
     humidity: 'Humedad',
@@ -121,6 +129,10 @@ export const translations = {
     notificationPermissionTitle: 'Permitir notificaciones',
     notificationPermissionDescription: 'Necesitamos tu permiso para enviar alertas meteorológicas.',
     testNotifications: 'Probar Notificaciones',
+    temperatureChart: 'Temperatura en los próximos días',
+    precipitationChart: 'Precipitación en los próximos días',
+    temperatureUnit: '°C',
+    precipitationUnit: 'mm',
   }
 };
 

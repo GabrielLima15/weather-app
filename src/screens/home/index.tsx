@@ -5,6 +5,7 @@ import { Container } from './styled';
 import { useHomeController } from './controller';
 import { CurrentWeather } from '../../components/weather/current-weather';
 import { ForecastList } from '../../components/weather/forecast-list';
+import { WeatherCharts } from '../../components/weather/weather-charts';
 import { useLanguage } from '../../contexts/language-context';
 import { Feather } from '@expo/vector-icons';
 import styled from 'styled-components/native';
@@ -64,6 +65,7 @@ export function HomeScreen() {
       >
         {currentWeather && <CurrentWeather data={currentWeather} language={language} />}
         {forecast && <ForecastList data={forecast.forecast.forecastday} language={language} />}
+        {forecast && <WeatherCharts forecast={forecast.forecast.forecastday} />}
       </ScrollView>
 
       <PermissionModal
