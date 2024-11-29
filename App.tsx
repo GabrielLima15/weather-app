@@ -7,6 +7,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { LanguageProvider } from './src/contexts/language-context';
 import { FavoritesProvider } from './src/contexts/favorites-context';
 import { NotificationsProvider } from './src/contexts/notifications-context';
+import { StatusBar } from 'expo-status-bar';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -21,6 +22,7 @@ const queryClient = new QueryClient({
 export default function App() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
+      <StatusBar style="light" backgroundColor="transparent" translucent />
       <QueryClientProvider client={queryClient}>
         <LanguageProvider>
           <FavoritesProvider>

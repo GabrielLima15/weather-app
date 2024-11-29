@@ -8,9 +8,15 @@ import { useLanguage } from '../../contexts/language-context';
 import { translate } from '../../utils/translations';
 import { NotificationsSettings } from '../../components/notifications-settings';
 import { Select } from '../../components/form/select';
+import { useNavigation } from '@react-navigation/native';
+import type { DrawerNavigationProp } from '@react-navigation/drawer';
+import type { RootDrawerParamList } from '../../navigation';
+
+type NavigationProp = DrawerNavigationProp<RootDrawerParamList>;
 
 export function SettingsScreen() {
   const { language, setLanguage } = useLanguage();
+  const navigation = useNavigation<NavigationProp>();
   const [selectedCity, setSelectedCity] = React.useState('São Paulo,SP');
 
   const languageOptions = Object.entries(SUPPORTED_LANGUAGES).map(([key, value]) => ({
@@ -24,6 +30,7 @@ export function SettingsScreen() {
 
   const handleCityChange = (city: string) => {
     setSelectedCity(city);
+    navigation.navigate('Home', { city });
   };
 
   return (
