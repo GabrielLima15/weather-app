@@ -6,10 +6,22 @@ import { useHomeController } from './controller';
 import { CurrentWeather } from '../../components/weather/current-weather';
 import { ForecastList } from '../../components/weather/forecast-list';
 import { useLanguage } from '../../contexts/language-context';
+import { Feather } from '@expo/vector-icons';
+import styled from 'styled-components/native';
+import { LocationPermissionModal } from '../../components/location-permission-modal';
 
 export function HomeScreen() {
   const { language } = useLanguage();
-  const { currentWeather, forecast, isLoading, error, refreshWeather } = useHomeController();
+  const { 
+    currentWeather, 
+    forecast, 
+    isLoading, 
+    error, 
+    refreshWeather,
+    requestLocation,
+    showPermissionModal,
+    handlePermissionResponse,
+  } = useHomeController();
 
   if (isLoading && !currentWeather) {
     return (
@@ -29,6 +41,10 @@ export function HomeScreen() {
 
   return (
     <Container>
+      <LocationButton onPress={requestLocation}>
+        <Feather name="navigation" size={24} color="white" />
+      </LocationButton>
+      
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ flexGrow: 1 }}
@@ -44,6 +60,22 @@ export function HomeScreen() {
         {currentWeather && <CurrentWeather data={currentWeather} language={language} />}
         {forecast && <ForecastList data={forecast.forecast.forecastday} language={language} />}
       </ScrollView>
+
+      <LocationPermissionModal
+        visible={showPermissionModal}
+        onAllow={() => handlePermissionResponse(true)}
+        onDeny={() => handlePermissionResponse(false)}
+      />
     </Container>
   );
-} 
+}
+
+const LocationButton = styled.TouchableOpacity`
+  position: absolute;
+  right: ${({ theme }) => theme.spacing.md}px;
+  top: ${({ theme }) => theme.spacing.md}px;
+  z-index: 1;
+  background-color: ${({ theme }) => theme.backgrounds.secondary};
+  padding: ${({ theme }) => theme.spacing.sm}px;
+  border-radius: ${({ theme }) => theme.borderRadius.full}px;
+`; 

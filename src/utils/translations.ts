@@ -20,6 +20,11 @@ export const translations = {
     searchPlaceholder: 'Buscar cidade...',
     noCitiesFound: 'Nenhuma cidade encontrada',
     search: 'Buscar',
+    locationPermissionTitle: 'Usar sua localização',
+    locationPermissionDescription: 'Precisamos da sua localização para mostrar a previsão do tempo da sua cidade.',
+    allow: 'Permitir',
+    deny: 'Agora não',
+    locationDenied: 'Localização não permitida',
   },
   en: {
     humidity: 'Humidity',
@@ -42,6 +47,11 @@ export const translations = {
     searchPlaceholder: 'Search city...',
     noCitiesFound: 'No cities found',
     search: 'Search',
+    locationPermissionTitle: 'Use your location',
+    locationPermissionDescription: 'We need your location to show the weather forecast for your city.',
+    allow: 'Allow',
+    deny: 'Not now',
+    locationDenied: 'Location not allowed',
   },
   es: {
     humidity: 'Humedad',
@@ -64,6 +74,11 @@ export const translations = {
     searchPlaceholder: 'Buscar ciudad...',
     noCitiesFound: 'No se encontraron ciudades',
     search: 'Buscar',
+    locationPermissionTitle: 'Usar tu ubicación',
+    locationPermissionDescription: 'Necesitamos tu ubicación para mostrar el pronóstico del tiempo de tu ciudad.',
+    allow: 'Permitir',
+    deny: 'Ahora no',
+    locationDenied: 'Ubicación no permitida',
   }
 };
 

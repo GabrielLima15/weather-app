@@ -3,6 +3,7 @@
 # dependencies
 node_modules/
 
+package-lock.json
 # Expo
 .expo/
 dist/
@@ -35,6 +36,12 @@ yarn-error.*
 # typescript
 *.tsbuildinfo
 
-# WeatherAPI
-.env
+# IDE
+.idea
+.vscode
 .cursorrules
+.env
+typescript_cursorrules
+
+# logs
+*.log
