@@ -10,7 +10,6 @@ Um aplicativo moderno de previsão do tempo construído com React Native e Expo.
 - [x] Múltiplas cidades favoritas
 - [x] Notificações de alertas meteorológicos
 - [x] Tema escuro (padrão)
-- [ ] Widgets personalizáveis
 - [ ] Gráficos de temperatura e precipitação
 - [x] Informações detalhadas (umidade, vento, pressão)
 - [ ] Histórico de dados meteorológicos
