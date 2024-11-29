@@ -35,9 +35,6 @@ yarn-error.*
 # typescript
 *.tsbuildinfo
 
-# IDE
-.idea
-.vscode
-
-# logs
-*.log
+# WeatherAPI
+.env
+.cursorrules
