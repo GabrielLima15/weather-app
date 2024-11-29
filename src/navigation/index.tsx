@@ -3,6 +3,7 @@ import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { HomeScreen } from '../screens/home';
 import { SettingsScreen } from '../screens/settings';
+import { FavoritesScreen } from '../screens/favorites';
 import { colors } from '../theme/colors';
 import { Feather } from '@expo/vector-icons';
 import { CustomDrawerContent } from '../components/drawer-content';
@@ -12,6 +13,7 @@ import { translate } from '../utils/translations';
 
 export type RootDrawerParamList = {
   Home: { city?: string } | undefined;
+  Favorites: undefined;
   Settings: undefined;
 };
 
@@ -58,9 +60,13 @@ export function Navigation() {
           component={HomeScreen}
           options={{ 
             title: translate('weather', language),
-            drawerIcon: ({ color, size }) => (
-              <Feather name="cloud" size={size} color={color} />
-            ),
+          }}
+        />
+        <Drawer.Screen 
+          name="Favorites" 
+          component={FavoritesScreen}
+          options={{ 
+            title: translate('favorites', language),
           }}
         />
         <Drawer.Screen 
@@ -68,9 +74,6 @@ export function Navigation() {
           component={SettingsScreen}
           options={{ 
             title: translate('settings', language),
-            drawerIcon: ({ color, size }) => (
-              <Feather name="settings" size={size} color={color} />
-            ),
           }}
         />
       </Drawer.Navigator>

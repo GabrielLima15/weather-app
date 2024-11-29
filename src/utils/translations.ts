@@ -25,6 +25,11 @@ export const translations = {
     allow: 'Permitir',
     deny: 'Agora não',
     locationDenied: 'Localização não permitida',
+    favorites: 'Cidades Favoritas',
+    addToFavorites: 'Adicionar aos Favoritos',
+    removeFromFavorites: 'Remover dos Favoritos',
+    noFavorites: 'Nenhuma cidade favorita',
+    removeFavorite: 'Remover dos favoritos',
   },
   en: {
     humidity: 'Humidity',
@@ -52,6 +57,11 @@ export const translations = {
     allow: 'Allow',
     deny: 'Not now',
     locationDenied: 'Location not allowed',
+    favorites: 'Favorite Cities',
+    addToFavorites: 'Add to Favorites',
+    removeFromFavorites: 'Remove from Favorites',
+    noFavorites: 'No favorite cities',
+    removeFavorite: 'Remove from favorites',
   },
   es: {
     humidity: 'Humedad',
@@ -79,13 +89,24 @@ export const translations = {
     allow: 'Permitir',
     deny: 'Ahora no',
     locationDenied: 'Ubicación no permitida',
+    favorites: 'Ciudades Favoritas',
+    addToFavorites: 'Añadir a Favoritos',
+    removeFromFavorites: 'Quitar de Favoritos',
+    noFavorites: 'No hay ciudades favoritas',
+    removeFavorite: 'Quitar de favoritos',
   }
 };
 
 export type TranslationKey = keyof typeof translations.pt_br;
 
 export function translate(key: TranslationKey, language: string = 'pt_br'): string {
-  return translations[language as keyof typeof translations]?.[key] || translations.pt_br[key];
+  const translation = translations[language as keyof typeof translations]?.[key];
+  
+  if (typeof translation === 'string') {
+    return translation;
+  }
+  
+  return translations.pt_br[key] as string;
 }
 
 export function translateWeekDay(date: Date, language: string = 'pt_br'): string {

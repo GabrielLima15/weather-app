@@ -5,6 +5,7 @@ import { ThemeProvider } from './src/theme/theme-provider';
 import { Navigation } from './src/navigation';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { LanguageProvider } from './src/contexts/language-context';
+import { FavoritesProvider } from './src/contexts/favorites-context';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -21,9 +22,11 @@ export default function App() {
     <GestureHandlerRootView style={{ flex: 1 }}>
       <QueryClientProvider client={queryClient}>
         <LanguageProvider>
-          <ThemeProvider>
-            <Navigation />
-          </ThemeProvider>
+          <FavoritesProvider>
+            <ThemeProvider>
+              <Navigation />
+            </ThemeProvider>
+          </FavoritesProvider>
         </LanguageProvider>
       </QueryClientProvider>
     </GestureHandlerRootView>

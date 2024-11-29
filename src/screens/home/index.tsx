@@ -9,6 +9,7 @@ import { useLanguage } from '../../contexts/language-context';
 import { Feather } from '@expo/vector-icons';
 import styled from 'styled-components/native';
 import { LocationPermissionModal } from '../../components/location-permission-modal';
+import { FavoriteButton } from '../../components/favorite-button';
 
 export function HomeScreen() {
   const { language } = useLanguage();
@@ -44,6 +45,10 @@ export function HomeScreen() {
       <LocationButton onPress={requestLocation}>
         <Feather name="navigation" size={24} color="white" />
       </LocationButton>
+      
+      {currentWeather && (
+        <FavoriteButton city={currentWeather.location.name} />
+      )}
       
       <ScrollView
         showsVerticalScrollIndicator={false}

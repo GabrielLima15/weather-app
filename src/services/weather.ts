@@ -1,5 +1,6 @@
 import { api } from './api';
 import type { WeatherResponse, ForecastResponse } from './types/weather';
+import type { SearchLocation } from './types/api';
 
 export const SUPPORTED_LANGUAGES = {
   'pt': 'Português',
@@ -52,7 +53,7 @@ export const weatherService = {
     return response.data;
   },
 
-  searchLocations: async (query: string) => {
+  searchLocations: async (query: string): Promise<SearchLocation[]> => {
     const response = await api.get('/search.json', {
       params: {
         q: query,
