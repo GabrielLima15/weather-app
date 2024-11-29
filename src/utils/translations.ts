@@ -43,6 +43,9 @@ export const translations = {
     precipitationChart: 'Precipitação nos próximos dias',
     temperatureUnit: '°C',
     precipitationUnit: 'mm',
+    state: 'Estado',
+    selectState: 'Selecione o estado',
+    selectCity: 'Selecione a cidade',
   },
   en: {
     humidity: 'Humidity',
@@ -88,6 +91,9 @@ export const translations = {
     precipitationChart: 'Precipitation in the next days',
     temperatureUnit: '°C',
     precipitationUnit: 'mm',
+    state: 'State',
+    selectState: 'Select state',
+    selectCity: 'Select city',
   },
   es: {
     humidity: 'Humedad',
@@ -133,6 +139,9 @@ export const translations = {
     precipitationChart: 'Precipitación en los próximos días',
     temperatureUnit: '°C',
     precipitationUnit: 'mm',
+    state: 'Región',
+    selectState: 'Seleccione la región',
+    selectCity: 'Seleccione la ciudad',
   }
 };
 

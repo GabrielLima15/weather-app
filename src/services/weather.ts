@@ -1,26 +1,18 @@
 import { api } from './api';
 import type { WeatherResponse, ForecastResponse } from './types/weather';
 import type { SearchLocation } from './types/api';
+import { getDefaultStates } from '../utils/defaultCities';
 
 export const SUPPORTED_LANGUAGES = {
-  'pt': 'Português',
   'pt_br': 'Português do Brasil',
   'en': 'English',
   'es': 'Español',
-  'fr': 'Français',
-  'de': 'Deutsch',
-  'it': 'Italiano',
-  'ja': '日本語',
-  'zh': '中文',
-  'ko': '한국어',
-  'ru': 'Русский',
-  'ar': 'العربية',
 } as const;
 
 export type SupportedLanguage = keyof typeof SUPPORTED_LANGUAGES;
 
 export const weatherService = {
-  getCurrentWeatherByCoords: async (lat: number, lon: number, lang: SupportedLanguage = 'pt') => {
+  getCurrentWeatherByCoords: async (lat: number, lon: number, lang: SupportedLanguage = 'pt_br') => {
     const response = await api.get<WeatherResponse>('/current.json', {
       params: {
         q: `${lat},${lon}`,
@@ -62,17 +54,9 @@ export const weatherService = {
     return response.data;
   },
 
-  // Lista de cidades principais do Brasil
-  getBrazilianCities: () => [
-    'São Paulo,SP',
-    'Rio de Janeiro,RJ',
-    'Brasília,DF',
-    'Salvador,BA',
-    'Fortaleza,CE',
-    'Belo Horizonte,MG',
-    'Manaus,AM',
-    'Curitiba,PR',
-    'Recife,PE',
-    'Porto Alegre,RS'
-  ],
+  // Atualizar este método para usar os estados e retornar a primeira cidade de cada estado
+  getBrazilianCities: (lang: SupportedLanguage = 'pt_br') => {
+    const states = getDefaultStates(lang);
+    return states.map(state => `${state.cities[0]}, ${state.name}`);
+  },
 }; 

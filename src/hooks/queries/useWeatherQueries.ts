@@ -15,7 +15,7 @@ export function useWeatherQueries(
   city: string = 'São Paulo,SP',
   options: UseWeatherQueriesOptions = {}
 ) {
-  const { language = 'pt', ...restOptions } = options;
+  const { language = 'pt_br', ...restOptions } = options;
   const queryClient = useQueryClient();
   
   const {
@@ -72,6 +72,6 @@ export function useWeatherQueries(
     error: error ? 'Falha ao carregar dados do clima' : null,
     refreshWeather: refetch,
     prefetchCityData,
-    availableCities: weatherService.getBrazilianCities(),
+    availableCities: weatherService.getBrazilianCities(language),
   };
 } 
