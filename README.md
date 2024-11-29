@@ -6,7 +6,7 @@ Um aplicativo moderno de previsão do tempo construído com React Native e Expo.
 
 - [x] Previsão do tempo atual e futura
 - [x] Busca de cidades
-- [ ] Geolocalização para clima local
+- [x] Geolocalização para clima local
 - [ ] Múltiplas cidades favoritas
 - [ ] Notificações de alertas meteorológicos
 - [x] Tema escuro (padrão)
@@ -25,6 +25,7 @@ Um aplicativo moderno de previsão do tempo construído com React Native e Expo.
 - React Navigation (Drawer Navigation)
 - TanStack Query (para cache e gerenciamento de dados)
 - WeatherAPI (API de clima)
+- Expo Location (para geolocalização)
 
 ## 📱 Telas Implementadas
 
@@ -34,6 +35,8 @@ Um aplicativo moderno de previsão do tempo construído com React Native e Expo.
 - [x] Informações detalhadas (umidade, vento, sensação térmica)
 - [x] Pull-to-refresh para atualizar dados
 - [x] Suporte a múltiplos idiomas
+- [x] Botão de geolocalização
+- [x] Modal de permissão de localização
 
 ### Configurações ✅
 - [x] Seleção de idioma (PT-BR, EN, ES)
