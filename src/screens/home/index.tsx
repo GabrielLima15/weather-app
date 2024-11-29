@@ -11,6 +11,7 @@ import { Feather } from '@expo/vector-icons';
 import styled from 'styled-components/native';
 import { PermissionModal } from '../../components/permission-modal';
 import { FavoriteButton } from '../../components/favorite-button';
+import { WeatherHistory } from '../../components/weather/weather-history';
 
 export function HomeScreen() {
   const { language } = useLanguage();
@@ -23,6 +24,7 @@ export function HomeScreen() {
     requestLocation,
     showPermissionModal,
     handlePermissionResponse,
+    history,
   } = useHomeController();
 
   if (isLoading && !currentWeather) {
@@ -66,6 +68,7 @@ export function HomeScreen() {
         {currentWeather && <CurrentWeather data={currentWeather} language={language} />}
         {forecast && <ForecastList data={forecast.forecast.forecastday} language={language} />}
         {forecast && <WeatherCharts forecast={forecast.forecast.forecastday} />}
+        {history && <WeatherHistory history={history} />}
       </ScrollView>
 
       <PermissionModal

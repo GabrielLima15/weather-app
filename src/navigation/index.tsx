@@ -4,6 +4,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import { HomeScreen } from '../screens/home';
 import { SettingsScreen } from '../screens/settings';
 import { FavoritesScreen } from '../screens/favorites';
+import { HistoryScreen } from '../screens/history';
 import { colors } from '../theme/colors';
 import { Feather } from '@expo/vector-icons';
 import { CustomDrawerContent } from '../components/drawer-content';
@@ -14,6 +15,7 @@ import { translate } from '../utils/translations';
 export type RootDrawerParamList = {
   Home: { city?: string } | undefined;
   Favorites: undefined;
+  History: undefined;
   Settings: undefined;
 };
 
@@ -67,6 +69,13 @@ export function Navigation() {
           component={FavoritesScreen}
           options={{ 
             title: translate('favorites', language),
+          }}
+        />
+        <Drawer.Screen 
+          name="History" 
+          component={HistoryScreen}
+          options={{ 
+            title: translate('history', language),
           }}
         />
         <Drawer.Screen 

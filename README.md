@@ -17,7 +17,10 @@ Um aplicativo moderno de previsão do tempo construído com React Native e Expo.
   - Brasil: 27 estados, principais cidades
   - EUA: 10 estados mais populosos, principais cidades
   - Espanha: 10 comunidades autônomas, principais cidades
-- [ ] Histórico de dados meteorológicos
+- [x] Histórico de dados meteorológicos
+  - Visualização por cidade
+  - Gráfico de temperatura dos últimos 7 dias
+  - Suporte a Fahrenheit para EN
 
 ## 🛠 Tecnologias
 
@@ -44,6 +47,14 @@ Um aplicativo moderno de previsão do tempo construído com React Native e Expo.
 - [x] Suporte a múltiplos idiomas
 - [x] Botão de geolocalização
 - [x] Botão de favoritar cidade
+
+### Histórico ✅
+- [x] Seleção de cidade por estado/região
+- [x] Gráfico de temperatura histórica
+- [x] Dados dos últimos 7 dias
+- [x] Suporte a múltiplos idiomas
+- [x] Estado vazio e loading
+- [x] Conversão automática de unidades (°C/°F)
 
 ### Configurações ✅
 - [x] Seleção de idioma (PT-BR, EN, ES)

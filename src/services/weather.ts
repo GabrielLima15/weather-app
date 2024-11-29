@@ -1,5 +1,5 @@
 import { api } from './api';
-import type { WeatherResponse, ForecastResponse } from './types/weather';
+import type { WeatherResponse, ForecastResponse, HistoricalResponse } from './types/weather';
 import type { SearchLocation } from './types/api';
 import { getDefaultStates } from '../utils/defaultCities';
 
@@ -58,5 +58,21 @@ export const weatherService = {
   getBrazilianCities: (lang: SupportedLanguage = 'pt_br') => {
     const states = getDefaultStates(lang);
     return states.map(state => `${state.cities[0]}, ${state.name}`);
+  },
+
+  getHistoricalWeather: async (city: string, days: number = 7, lang: SupportedLanguage = 'pt_br') => {
+    const endDate = new Date();
+    const startDate = new Date();
+    startDate.setDate(startDate.getDate() - days);
+
+    const response = await api.get<HistoricalResponse>('/history.json', {
+      params: {
+        q: city,
+        dt: startDate.toISOString().split('T')[0],
+        end_dt: endDate.toISOString().split('T')[0],
+        lang,
+      },
+    });
+    return response.data;
   },
 }; 

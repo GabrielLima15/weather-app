@@ -20,13 +20,13 @@ export function useWeatherQueries(
   
   const {
     data: weatherData,
-    isLoading,
-    error,
+    isLoading: isLoadingCurrent,
+    error: currentError,
     refetch,
     isFetching,
     isRefetching,
-    isSuccess,
-    isError,
+    isSuccess: isCurrentSuccess,
+    isError: isCurrentError,
   } = useQuery({
     queryKey: QueryKeys.weather.byCity(city, language),
     queryFn: async () => {
@@ -40,38 +40,32 @@ export function useWeatherQueries(
         forecast: forecastData
       };
     },
-    staleTime: 1000 * 60 * 5, // 5 minutos
+    staleTime: 1000 * 60 * 5,
     ...restOptions,
   });
 
-  // Pré-fetch dados de uma cidade
-  const prefetchCityData = async (cityName: string, lang: SupportedLanguage = language) => {
-    await queryClient.prefetchQuery({
-      queryKey: QueryKeys.weather.byCity(cityName, lang),
-      queryFn: async () => {
-        const [currentData, forecastData] = await Promise.all([
-          weatherService.getCurrentWeatherByCity(cityName, lang),
-          weatherService.getForecastByCity(cityName, 5, lang)
-        ]);
-        return {
-          current: currentData,
-          forecast: forecastData
-        };
-      },
-    });
-  };
+  const {
+    data: historyData,
+    isLoading: isLoadingHistory,
+    error: historyError,
+  } = useQuery({
+    queryKey: QueryKeys.weather.history(city, language),
+    queryFn: () => weatherService.getHistoricalWeather(city, 7, language),
+    staleTime: 1000 * 60 * 60,
+    ...restOptions,
+  });
 
   return {
     currentWeather: weatherData?.current || null,
     forecast: weatherData?.forecast || null,
-    isLoading,
+    history: historyData?.forecast?.forecastday || null,
+    isLoading: isLoadingCurrent || isLoadingHistory,
     isFetching,
     isRefetching,
-    isSuccess,
-    isError,
-    error: error ? 'Falha ao carregar dados do clima' : null,
+    isSuccess: isCurrentSuccess,
+    isError: isCurrentError,
+    error: currentError || historyError ? 'Falha ao carregar dados do clima' : null,
     refreshWeather: refetch,
-    prefetchCityData,
     availableCities: weatherService.getBrazilianCities(language),
   };
 } 

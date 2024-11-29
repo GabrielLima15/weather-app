@@ -46,6 +46,12 @@ export const translations = {
     state: 'Estado',
     selectState: 'Selecione o estado',
     selectCity: 'Selecione a cidade',
+    historyChart: 'Histórico de temperatura',
+    lastDays: 'Últimos {days} dias',
+    history: 'Histórico',
+    weatherHistory: 'Histórico do Clima',
+    selectCityToView: 'Selecione uma cidade para ver o histórico',
+    noHistoryData: 'Nenhum dado histórico disponível para esta cidade',
   },
   en: {
     humidity: 'Humidity',
@@ -94,6 +100,12 @@ export const translations = {
     state: 'State',
     selectState: 'Select state',
     selectCity: 'Select city',
+    historyChart: 'Temperature History',
+    lastDays: 'Last {days} days',
+    history: 'History',
+    weatherHistory: 'Weather History',
+    selectCityToView: 'Select a city to view history',
+    noHistoryData: 'No historical data available for this city',
   },
   es: {
     humidity: 'Humedad',
@@ -142,6 +154,12 @@ export const translations = {
     state: 'Región',
     selectState: 'Seleccione la región',
     selectCity: 'Seleccione la ciudad',
+    historyChart: 'Historial de temperatura',
+    lastDays: 'Últimos {days} días',
+    history: 'Historial',
+    weatherHistory: 'Historial del Clima',
+    selectCityToView: 'Seleccione una ciudad para ver el historial',
+    noHistoryData: 'No hay datos históricos disponibles para esta ciudad',
   }
 };
 

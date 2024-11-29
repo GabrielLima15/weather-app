@@ -86,21 +86,24 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
           accessoryLeft={() => (
             <Feather name="cloud" size={24} color="white" />
           )}
-          style={drawerItemStyle}
         />
         <DrawerItem
           title={translate('favorites', language)}
           accessoryLeft={() => (
             <Feather name="star" size={24} color="white" />
           )}
-          style={drawerItemStyle}
+        />
+        <DrawerItem
+          title={translate('history', language)}
+          accessoryLeft={() => (
+            <Feather name="clock" size={24} color="white" />
+          )}
         />
         <DrawerItem
           title={translate('settings', language)}
           accessoryLeft={() => (
             <Feather name="settings" size={24} color="white" />
           )}
-          style={drawerItemStyle}
         />
       </Drawer>
     </DrawerContentScrollView>
