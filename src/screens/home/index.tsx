@@ -1,45 +1,52 @@
 import React from 'react';
-import { ActivityIndicator, ScrollView, RefreshControl } from 'react-native';
-import { Text } from '@ui-kitten/components';
-import { Container } from './styled';
+import { ActivityIndicator, RefreshControl } from 'react-native';
+import { Feather } from '@expo/vector-icons';
+import { useLanguage } from '../../contexts/language-context';
 import { useHomeController } from './controller';
 import { CurrentWeather } from '../../components/weather/current-weather';
 import { ForecastList } from '../../components/weather/forecast-list';
 import { WeatherCharts } from '../../components/weather/weather-charts';
-import { useLanguage } from '../../contexts/language-context';
-import { Feather } from '@expo/vector-icons';
-import styled from 'styled-components/native';
 import { PermissionModal } from '../../components/permission-modal';
 import { FavoriteButton } from '../../components/favorite-button';
 import { WeatherHistory } from '../../components/weather/weather-history';
+import {
+  Container,
+  LoadingContainer,
+  ErrorContainer,
+  ErrorText,
+  LocationButton,
+  ScrollContainer,
+} from './styled';
 
 export function HomeScreen() {
   const { language } = useLanguage();
   const { 
     currentWeather, 
     forecast, 
+    history,
     isLoading, 
     error, 
     refreshWeather,
     requestLocation,
     showPermissionModal,
     handlePermissionResponse,
-    history,
   } = useHomeController();
 
   if (isLoading && !currentWeather) {
     return (
-      <Container>
+      <LoadingContainer>
         <ActivityIndicator size="large" color="white" />
-      </Container>
+      </LoadingContainer>
     );
   }
 
   if (error) {
     return (
-      <Container>
-        <Text status="danger">{error}</Text>
-      </Container>
+      <ErrorContainer>
+        <ErrorText>
+          {typeof error === 'string' ? error : 'Ocorreu um erro'}
+        </ErrorText>
+      </ErrorContainer>
     );
   }
 
@@ -53,9 +60,8 @@ export function HomeScreen() {
         <FavoriteButton city={currentWeather.location.name} />
       )}
       
-      <ScrollView
+      <ScrollContainer
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ flexGrow: 1 }}
         removeClippedSubviews={true}
         refreshControl={
           <RefreshControl
@@ -66,10 +72,16 @@ export function HomeScreen() {
         }
       >
         {currentWeather && <CurrentWeather data={currentWeather} language={language} />}
-        {forecast && <ForecastList data={forecast.forecast.forecastday} language={language} />}
-        {forecast && <WeatherCharts forecast={forecast.forecast.forecastday} />}
-        {history && <WeatherHistory history={history} />}
-      </ScrollView>
+        {forecast?.forecast?.forecastday && (
+          <ForecastList data={forecast.forecast.forecastday} language={language} />
+        )}
+        {forecast?.forecast?.forecastday && (
+          <WeatherCharts forecast={forecast.forecast.forecastday} />
+        )}
+        {history?.forecast?.forecastday && (
+          <WeatherHistory history={history.forecast.forecastday} />
+        )}
+      </ScrollContainer>
 
       <PermissionModal
         visible={showPermissionModal}
@@ -79,14 +91,4 @@ export function HomeScreen() {
       />
     </Container>
   );
-}
-
-const LocationButton = styled.TouchableOpacity`
-  position: absolute;
-  right: ${({ theme }) => theme.spacing.md}px;
-  top: ${({ theme }) => theme.spacing.md}px;
-  z-index: 1;
-  background-color: ${({ theme }) => theme.backgrounds.secondary};
-  padding: ${({ theme }) => theme.spacing.sm}px;
-  border-radius: ${({ theme }) => theme.borderRadius.full}px;
-`; 
+} 

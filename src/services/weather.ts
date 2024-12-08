@@ -1,5 +1,5 @@
 import { api } from './api';
-import type { WeatherResponse, ForecastResponse, HistoricalResponse } from './types/weather';
+import type { WeatherResponse, ForecastResponse, HistoryResponse } from './types/weather';
 import type { SearchLocation } from './types/api';
 import { getDefaultStates } from '../utils/defaultCities';
 
@@ -10,6 +10,29 @@ export const SUPPORTED_LANGUAGES = {
 } as const;
 
 export type SupportedLanguage = keyof typeof SUPPORTED_LANGUAGES;
+
+export const weatherApi = {
+  getCurrentWeather: async (location: string): Promise<WeatherResponse> => {
+    const response = await api.get(`/current.json?q=${location}`);
+    return response.data;
+  },
+
+  getForecast: async (location: string): Promise<ForecastResponse> => {
+    const response = await api.get(`/forecast.json?q=${location}&days=7`);
+    return response.data;
+  },
+
+  getHistory: async (location: string): Promise<HistoryResponse> => {
+    const endDate = new Date();
+    const startDate = new Date();
+    startDate.setDate(startDate.getDate() - 7);
+
+    const response = await api.get(
+      `/history.json?q=${location}&dt=${startDate.toISOString().split('T')[0]}&end_dt=${endDate.toISOString().split('T')[0]}`
+    );
+    return response.data;
+  },
+};
 
 export const weatherService = {
   getCurrentWeatherByCoords: async (lat: number, lon: number, lang: SupportedLanguage = 'pt_br') => {
@@ -65,7 +88,7 @@ export const weatherService = {
     const startDate = new Date();
     startDate.setDate(startDate.getDate() - days);
 
-    const response = await api.get<HistoricalResponse>('/history.json', {
+    const response = await api.get<HistoryResponse>('/history.json', {
       params: {
         q: city,
         dt: startDate.toISOString().split('T')[0],

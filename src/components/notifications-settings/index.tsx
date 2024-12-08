@@ -1,9 +1,7 @@
 import React from 'react';
 import { Switch } from 'react-native';
-import { useNotifications } from '../../contexts/notifications-context';
-import { useLanguage } from '../../contexts/language-context';
-import { translate } from '../../utils/translations';
 import { PermissionModal } from '../permission-modal';
+import { useNotificationsSettingsController } from './controller';
 import {
   Container,
   Title,
@@ -16,47 +14,22 @@ import {
 } from './styled';
 
 export function NotificationsSettings() {
-  const { settings, isGranted, requestPermission, updateSettings, scheduleWeatherAlert } = useNotifications();
-  const { language } = useLanguage();
-  const [showPermissionModal, setShowPermissionModal] = React.useState(false);
-
-  const handleToggle = async (key: keyof typeof settings) => {
-    if (!isGranted) {
-      setShowPermissionModal(true);
-      return;
-    }
-
-    await updateSettings({ [key]: !settings[key] });
-  };
-
-  const handlePermissionResponse = async (allowed: boolean) => {
-    setShowPermissionModal(false);
-    if (allowed) {
-      await requestPermission();
-    }
-  };
-
-  const handleTestNotification = async () => {
-    if (settings.enabled) {
-      if (settings.rainAlert) {
-        await scheduleWeatherAlert('rainAlert', 'Teste de alerta de chuva! 🌧');
-      }
-      if (settings.temperatureAlert) {
-        await scheduleWeatherAlert('temperatureAlert', 'Teste de alerta de temperatura! 🌡');
-      }
-      if (settings.windAlert) {
-        await scheduleWeatherAlert('windAlert', 'Teste de alerta de vento! 💨');
-      }
-    }
-  };
+  const {
+    settings,
+    showPermissionModal,
+    handleToggle,
+    handlePermissionResponse,
+    handleTestNotification,
+    translations,
+  } = useNotificationsSettingsController();
 
   return (
     <Container>
-      <Title>{translate('notificationsTitle', language)}</Title>
-      <Description>{translate('notificationsDescription', language)}</Description>
+      <Title>{translations.title}</Title>
+      <Description>{translations.description}</Description>
 
       <SettingItem>
-        <SettingLabel>{translate('enableNotifications', language)}</SettingLabel>
+        <SettingLabel>{translations.enableNotifications}</SettingLabel>
         <Switch
           value={settings.enabled}
           onValueChange={() => handleToggle('enabled')}
@@ -66,7 +39,7 @@ export function NotificationsSettings() {
       <Divider />
 
       <SettingItem>
-        <SettingLabel>{translate('rainAlerts', language)}</SettingLabel>
+        <SettingLabel>{translations.rainAlerts}</SettingLabel>
         <Switch
           value={settings.rainAlert}
           onValueChange={() => handleToggle('rainAlert')}
@@ -75,7 +48,7 @@ export function NotificationsSettings() {
       </SettingItem>
 
       <SettingItem>
-        <SettingLabel>{translate('temperatureAlerts', language)}</SettingLabel>
+        <SettingLabel>{translations.temperatureAlerts}</SettingLabel>
         <Switch
           value={settings.temperatureAlert}
           onValueChange={() => handleToggle('temperatureAlert')}
@@ -84,7 +57,7 @@ export function NotificationsSettings() {
       </SettingItem>
 
       <SettingItem>
-        <SettingLabel>{translate('windAlerts', language)}</SettingLabel>
+        <SettingLabel>{translations.windAlerts}</SettingLabel>
         <Switch
           value={settings.windAlert}
           onValueChange={() => handleToggle('windAlert')}
@@ -94,7 +67,7 @@ export function NotificationsSettings() {
 
       {settings.enabled && (
         <TestButton onPress={handleTestNotification}>
-          <TestButtonText>{translate('testNotifications', language)}</TestButtonText>
+          <TestButtonText>{translations.testNotifications}</TestButtonText>
         </TestButton>
       )}
 

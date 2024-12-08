@@ -1,10 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { ActivityIndicator } from 'react-native';
-import { useDebounce } from '../../hooks/useDebounce';
-import { weatherService } from '../../services/weather';
-import { useQuery } from '@tanstack/react-query';
-import { useLanguage } from '../../contexts/language-context';
 import { translate } from '../../utils/translations';
+import { useSearchController } from './controller';
+import { Feather } from '@expo/vector-icons';
 import { 
   Container, 
   SearchInput, 
@@ -18,28 +16,18 @@ import {
   EmptyStateText,
   LoadingContainer
 } from './styled';
-import { Feather } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
-import type { DrawerNavigationProp } from '@react-navigation/drawer';
-import type { RootDrawerParamList } from '../../navigation';
-
-type NavigationProp = DrawerNavigationProp<RootDrawerParamList>;
 
 export function SearchScreen() {
-  const [searchTerm, setSearchTerm] = useState('');
-  const debouncedSearch = useDebounce(searchTerm, 500);
-  const { language } = useLanguage();
-  const navigation = useNavigation<NavigationProp>();
+  const {
+    searchTerm,
+    setSearchTerm,
+    cities,
+    isLoading,
+    language,
+    handleCitySelect,
+  } = useSearchController();
 
-  const { data: cities, isLoading } = useQuery({
-    queryKey: ['cities', debouncedSearch],
-    queryFn: () => weatherService.searchLocations(debouncedSearch),
-    enabled: debouncedSearch.length > 2,
-  });
-
-  const handleCitySelect = (city: string) => {
-    navigation.navigate('Home', { city });
-  };
+  const debouncedSearchLength = searchTerm.length > 2;
 
   return (
     <Container>
@@ -53,7 +41,7 @@ export function SearchScreen() {
         />
       </SearchInputContainer>
 
-      {isLoading && debouncedSearch.length > 2 ? (
+      {isLoading && debouncedSearchLength ? (
         <LoadingContainer>
           <ActivityIndicator size="large" color="white" />
         </LoadingContainer>
@@ -68,7 +56,7 @@ export function SearchScreen() {
             </CityItem>
           )}
         />
-      ) : debouncedSearch.length > 2 ? (
+      ) : debouncedSearchLength ? (
         <EmptyState>
           <Feather name="map-pin" size={48} color="gray" />
           <EmptyStateText>{translate('noCitiesFound', language)}</EmptyStateText>

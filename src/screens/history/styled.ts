@@ -44,4 +44,11 @@ export const EmptyText = styled.Text`
   font-size: 16px;
   text-align: center;
   margin-top: ${({ theme }) => theme.spacing.md}px;
+`;
+
+export const ErrorText = styled.Text`
+  color: ${({ theme }) => theme.colors.error};
+  font-size: 16px;
+  text-align: center;
+  padding: ${({ theme }) => theme.spacing.lg}px;
 `; 

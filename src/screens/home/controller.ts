@@ -4,8 +4,9 @@ import { useEffect, useState } from 'react';
 import { useLocation } from '../../hooks/useLocation';
 import { useNotifications } from '../../contexts/notifications-context';
 import { useLanguage } from '../../contexts/language-context';
+import type { HomeScreenState } from './types';
 
-export function useHomeController() {
+export function useHomeController(): HomeScreenState {
   const route = useRoute<any>();
   const [currentCity, setCurrentCity] = useState<string | null>(null);
   const { language } = useLanguage();
@@ -31,36 +32,44 @@ export function useHomeController() {
   const { 
     currentWeather, 
     forecast, 
+    history,
     isLoading: isLoadingWeather, 
     error: weatherError,
     refreshWeather 
-  } = useWeatherQueries(currentCity || 'São Paulo,SP', { language });
+  } = useWeatherQueries({ 
+    city: currentCity || undefined 
+  });
 
   // Verificar condições para alertas
   useEffect(() => {
     if (currentWeather) {
-      // Alerta de chuva
       if (currentWeather.current.condition.text.toLowerCase().includes('rain')) {
         scheduleWeatherAlert('rainAlert', 'Há previsão de chuva para hoje!');
       }
-
-      // Alerta de temperatura
       if (currentWeather.current.temp_c > 30) {
         scheduleWeatherAlert('temperatureAlert', 'Temperatura muito alta! Mantenha-se hidratado.');
       }
-
-      // Alerta de vento
       if (currentWeather.current.wind_kph > 40) {
         scheduleWeatherAlert('windAlert', 'Ventos fortes! Tome cuidado ao sair.');
       }
     }
-  }, [currentWeather]);
+  }, [currentWeather, scheduleWeatherAlert]);
+
+  const error = locationError || weatherError;
+  const errorMessage = error 
+    ? typeof error === 'string' 
+      ? error 
+      : error instanceof Error 
+        ? error.message 
+        : 'Erro desconhecido'
+    : null;
 
   return {
-    currentWeather,
-    forecast,
+    currentWeather: currentWeather || null,
+    forecast: forecast || null,
+    history: history || null,
     isLoading: isLoadingLocation || isLoadingWeather,
-    error: locationError || weatherError,
+    error: errorMessage,
     refreshWeather,
     requestLocation,
     showPermissionModal,

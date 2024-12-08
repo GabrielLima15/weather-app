@@ -1,71 +1,63 @@
-import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { weatherService, type SupportedLanguage } from '../../services/weather';
-import type { WeatherResponse } from '../../services/types/weather';
-import { QueryKeys } from './constants';
+import { useQuery } from '@tanstack/react-query';
+import { weatherApi } from '../../services/weather';
+import { QUERY_KEYS } from './constants';
+import { useLocation } from '../useLocation';
 
 interface UseWeatherQueriesOptions {
-  enabled?: boolean;
-  onSuccess?: (data: { current: WeatherResponse, forecast: any }) => void;
-  onError?: (error: Error) => void;
-  refetchInterval?: number | false;
-  language?: SupportedLanguage;
+  city?: string;
 }
 
-export function useWeatherQueries(
-  city: string = 'São Paulo,SP',
-  options: UseWeatherQueriesOptions = {}
-) {
-  const { language = 'pt_br', ...restOptions } = options;
-  const queryClient = useQueryClient();
+export function useWeatherQueries(options: UseWeatherQueriesOptions = {}) {
+  const { location } = useLocation();
+  const queryLocation = options.city || location || 'São Paulo,SP';
   
   const {
-    data: weatherData,
+    data: currentWeather,
     isLoading: isLoadingCurrent,
     error: currentError,
-    refetch,
-    isFetching,
-    isRefetching,
-    isSuccess: isCurrentSuccess,
-    isError: isCurrentError,
+    refetch: refetchCurrent,
   } = useQuery({
-    queryKey: QueryKeys.weather.byCity(city, language),
-    queryFn: async () => {
-      const [currentData, forecastData] = await Promise.all([
-        weatherService.getCurrentWeatherByCity(city, language),
-        weatherService.getForecastByCity(city, 5, language)
-      ]);
-
-      return {
-        current: currentData,
-        forecast: forecastData
-      };
-    },
-    staleTime: 1000 * 60 * 5,
-    ...restOptions,
+    queryKey: [QUERY_KEYS.CURRENT_WEATHER, queryLocation],
+    queryFn: () => weatherApi.getCurrentWeather(queryLocation),
+    enabled: !!queryLocation,
   });
 
   const {
-    data: historyData,
-    isLoading: isLoadingHistory,
-    error: historyError,
+    data: forecast,
+    isLoading: isLoadingForecast,
+    error: forecastError,
+    refetch: refetchForecast,
   } = useQuery({
-    queryKey: QueryKeys.weather.history(city, language),
-    queryFn: () => weatherService.getHistoricalWeather(city, 7, language),
-    staleTime: 1000 * 60 * 60,
-    ...restOptions,
+    queryKey: [QUERY_KEYS.FORECAST, queryLocation],
+    queryFn: () => weatherApi.getForecast(queryLocation),
+    enabled: !!queryLocation,
   });
 
+  const {
+    data: history,
+    isLoading: isLoadingHistory,
+    error: historyError,
+    refetch: refetchHistory,
+  } = useQuery({
+    queryKey: [QUERY_KEYS.HISTORY, queryLocation],
+    queryFn: () => weatherApi.getHistory(queryLocation),
+    enabled: !!queryLocation,
+  });
+
+  const refreshWeather = async () => {
+    await Promise.all([
+      refetchCurrent(),
+      refetchForecast(),
+      refetchHistory(),
+    ]);
+  };
+
   return {
-    currentWeather: weatherData?.current || null,
-    forecast: weatherData?.forecast || null,
-    history: historyData?.forecast?.forecastday || null,
-    isLoading: isLoadingCurrent || isLoadingHistory,
-    isFetching,
-    isRefetching,
-    isSuccess: isCurrentSuccess,
-    isError: isCurrentError,
-    error: currentError || historyError ? 'Falha ao carregar dados do clima' : null,
-    refreshWeather: refetch,
-    availableCities: weatherService.getBrazilianCities(language),
+    currentWeather,
+    forecast,
+    history,
+    isLoading: isLoadingCurrent || isLoadingForecast || isLoadingHistory,
+    error: currentError || forecastError || historyError,
+    refreshWeather,
   };
 } 

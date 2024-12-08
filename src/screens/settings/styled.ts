@@ -17,4 +17,11 @@ export const Title = styled.Text`
 
 export const SettingSection = styled.View`
   margin-bottom: ${({ theme }) => theme.spacing.lg}px;
+`;
+
+export const SectionTitle = styled.Text`
+  color: ${({ theme }) => theme.text.primary};
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: ${({ theme }) => theme.spacing.sm}px;
 `; 

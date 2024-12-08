@@ -7,18 +7,31 @@
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
+    "plugins": [
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "Permitir $(PRODUCT_NAME) usar sua localização para mostrar a previsão do tempo da sua cidade.",
+          "locationWhenInUsePermission": "Permitir $(PRODUCT_NAME) usar sua localização para mostrar a previsão do tempo da sua cidade.",
+          "isIosBackgroundLocationEnabled": false,
+          "isAndroidBackgroundLocationEnabled": false
+        }
+      ]
+    ],
     "splash": {
       "image": "./assets/splash-icon.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#171717"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.yourcompany.weatherapp"
     },
     "android": {
+      "package": "com.yourcompany.weatherapp",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#171717"
       }
     },
     "web": {

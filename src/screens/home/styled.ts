@@ -7,8 +7,34 @@ export const Container = styled(Layout)`
   padding: ${({ theme }) => theme.spacing.md}px;
 `;
 
-export const Title = styled.Text`
-  color: ${({ theme }) => theme.text.primary};
-  font-size: 24px;
-  font-weight: bold;
-`; 
+export const LoadingContainer = styled(Container)`
+  justify-content: center;
+  align-items: center;
+`;
+
+export const ErrorContainer = styled(Container)`
+  justify-content: center;
+  align-items: center;
+`;
+
+export const ErrorText = styled.Text`
+  color: ${({ theme }) => theme.colors.error};
+  font-size: 16px;
+  text-align: center;
+`;
+
+export const LocationButton = styled.TouchableOpacity`
+  position: absolute;
+  right: ${({ theme }) => theme.spacing.md}px;
+  top: ${({ theme }) => theme.spacing.md}px;
+  z-index: 1;
+  background-color: ${({ theme }) => theme.backgrounds.secondary};
+  padding: ${({ theme }) => theme.spacing.sm}px;
+  border-radius: ${({ theme }) => theme.borderRadius.full}px;
+`;
+
+export const ScrollContainer = styled.ScrollView.attrs({
+  contentContainerStyle: {
+    flexGrow: 1,
+  },
+})``; 

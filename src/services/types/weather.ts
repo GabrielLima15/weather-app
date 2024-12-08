@@ -73,4 +73,11 @@ export interface ForecastResponse extends WeatherResponse {
   forecast: {
     forecastday: ForecastDay[];
   };
+}
+
+export interface HistoryResponse {
+  forecast: {
+    forecastday: ForecastDay[];
+  };
+  location: Location;
 } 

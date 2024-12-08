@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { View } from 'react-native';
+import React from 'react';
 import { Select } from '../form/select';
 import { translate } from '../../utils/translations';
-import { getDefaultStates } from '../../utils/defaultCities';
 import type { SupportedLanguage } from '../../services/weather';
-import styled from 'styled-components/native';
+import { Container, SelectContainer, Label } from './styled';
+import { useCitySelectorController } from './controller';
 
 interface CitySelectorProps {
   selectedCity: string;
@@ -13,28 +12,13 @@ interface CitySelectorProps {
 }
 
 export function CitySelector({ selectedCity, onCityChange, language }: CitySelectorProps) {
-  const states = getDefaultStates(language);
-  const [selectedState, setSelectedState] = useState('');
-  const [availableCities, setAvailableCities] = useState<string[]>([]);
-
-  const stateOptions = states.map(state => ({
-    label: state.name,
-    value: state.name,
-  }));
-
-  const cityOptions = availableCities.map(city => ({
-    label: city,
-    value: `${city}, ${selectedState}`,
-  }));
-
-  useEffect(() => {
-    if (selectedState) {
-      const state = states.find(s => s.name === selectedState);
-      setAvailableCities(state?.cities || []);
-    } else {
-      setAvailableCities([]);
-    }
-  }, [selectedState, language]);
+  const {
+    selectedState,
+    setSelectedState,
+    stateOptions,
+    cityOptions,
+    disabled,
+  } = useCitySelectorController(language, selectedCity);
 
   return (
     <Container>
@@ -55,22 +39,9 @@ export function CitySelector({ selectedCity, onCityChange, language }: CitySelec
           options={cityOptions}
           onSelect={onCityChange}
           placeholder={translate('selectCity', language)}
-          disabled={!selectedState}
+          isDisabled={disabled}
         />
       </SelectContainer>
     </Container>
   );
-}
-
-const Container = styled.View`
-  gap: ${({ theme }) => theme.spacing.md}px;
-`;
-
-const SelectContainer = styled.View`
-  gap: ${({ theme }) => theme.spacing.sm}px;
-`;
-
-const Label = styled.Text`
-  color: ${({ theme }) => theme.text.secondary};
-  font-size: 14px;
-`; 
+} 
