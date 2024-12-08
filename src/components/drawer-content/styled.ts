@@ -38,8 +38,9 @@ export const SearchInput = styled.TextInput`
   font-size: 16px;
 `;
 
-export const ResultsList = styled.View`
+export const SearchResultsContainer = styled.View`
   margin-top: ${({ theme }) => theme.spacing.sm}px;
+  max-height: 300px;
 `;
 
 export const CityItem = styled.TouchableOpacity`
